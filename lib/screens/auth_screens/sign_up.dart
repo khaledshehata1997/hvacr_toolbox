@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hvacr_tool_box/screens/Sign_in.dart';
+import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
 import 'package:hvacr_tool_box/widgets/default_button.dart';
+
+import 'Sign_in.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -19,6 +21,8 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     var mediQuery = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: appbar(context, 'SIGN UP', false),
       body: Form(
         key: _globalKey,
         child: ListView(
@@ -28,26 +32,26 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.arrow_back_ios,
-                          color: Colors.black45, size: 27),
-                      SizedBox(
-                        width: mediQuery.width * .26,
-                      ),
-                      Container(
-                        child: Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                              fontSize: 27,
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.arrow_back_ios,
+                  //         color: Colors.black45, size: 27),
+                  //     SizedBox(
+                  //       width: mediQuery.width * .26,
+                  //     ),
+                  //     Container(
+                  //       child: Text(
+                  //         'SIGN UP',
+                  //         style: TextStyle(
+                  //             fontSize: 27,
+                  //             color: Colors.black45,
+                  //             fontWeight: FontWeight.w500),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
-                    height: mediQuery.width * .07,
+                    height: mediQuery.width * .04,
                   ),
                   Text(
                     'Welcome to HVACR tool box please fill this form to sign up',

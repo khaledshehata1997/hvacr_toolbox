@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hvacr_tool_box/screens/sign_up.dart';
+import 'package:hvacr_tool_box/screens/auth_screens/sign_up.dart';
+import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
 import 'package:hvacr_tool_box/widgets/default_button.dart';
 
@@ -19,6 +20,8 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     var mediQuery = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: appbar(context, 'LOG IN' , false),
       body: Form(
         key: _globalKey,
         child: ListView(
@@ -28,26 +31,26 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.arrow_back_ios,
-                          color: Colors.black45, size: 27),
-                      SizedBox(
-                        width: mediQuery.width * .26,
-                      ),
-                      Container(
-                        child: Text(
-                          'LOG IN',
-                          style: TextStyle(
-                              fontSize: 27,
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.arrow_back_ios,
+                  //         color: Colors.black45, size: 27),
+                  //     SizedBox(
+                  //       width: mediQuery.width * .26,
+                  //     ),
+                  //     Container(
+                  //       child: Text(
+                  //         'LOG IN',
+                  //         style: TextStyle(
+                  //             fontSize: 27,
+                  //             color: Colors.black45,
+                  //             fontWeight: FontWeight.w500),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
-                    height: mediQuery.width * .09,
+                    height: mediQuery.width * .04,
                   ),
                   Text(
                     'Welcome back please insert your username and password to log in',
