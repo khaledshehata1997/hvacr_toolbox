@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/provider/auth_provider.dart';
-import 'package:hvacr_tool_box/screens/contact_us.dart';
+import 'package:hvacr_tool_box/screens/aboutUs.dart';
+import 'package:hvacr_tool_box/screens/myProfile.dart';
+import 'package:hvacr_tool_box/screens/privacyPolicy.dart';
+import 'package:hvacr_tool_box/screens/terms.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/auth_screens/change_password.dart';
 import 'screens/auth_screens/forget_password.dart';
-import 'screens/errors/errorNoInternet.dart';
-import 'screens/errors/errorServerDown.dart';
+import 'screens/contact_us.dart';
+
 
 void main() {
   runApp( MultiProvider(
@@ -18,11 +19,12 @@ void main() {
     ],
     child: MaterialApp(
       theme: ThemeData(
+        fontFamily: "avenir",
       primaryColor: Color(0xff2c8b29),
       accentColor: Color(0xffffffff)
     ),
       debugShowCheckedModeBanner: false,
-       home: ForgetPassword() ,
+       home: MyProfile() ,
       title: 'Hvacr Tool Box',
 
     ),
