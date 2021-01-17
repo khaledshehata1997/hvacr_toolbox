@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/provider/auth_provider.dart';
-import 'package:hvacr_tool_box/screens/myProfile.dart';
 import 'package:provider/provider.dart';
+import 'screens/settings.dart';
 
 
 void main() {
@@ -19,7 +19,7 @@ void main() {
       accentColor: Color(0xffffffff)
     ),
       debugShowCheckedModeBanner: false,
-       home: MyProfile() ,
+       home: Settings() ,
       title: 'Hvacr Tool Box',
 
     ),
