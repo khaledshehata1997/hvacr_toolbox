@@ -14,7 +14,7 @@ class Settings extends StatelessWidget {
             margin: EdgeInsets.all( 20),
             padding: EdgeInsets.all(10),
             width: mediQuery.width * .9,
-            height: mediQuery.height * .21,
+            height: mediQuery.height * .23,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
