@@ -1,6 +1,8 @@
 
 
+
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/widgets/CategoryBar.dart';
 import 'package:hvacr_tool_box/widgets/Drawer.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 
@@ -11,7 +13,8 @@ class MainScreen extends StatefulWidget{
 
 class _MainScreenState extends State<MainScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
+  String textlol = "3";
+  List<String> test = ["helllo" , "man" , "world"] ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

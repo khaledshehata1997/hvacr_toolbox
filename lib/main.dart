@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/provider/auth_provider.dart';
 import 'package:hvacr_tool_box/screens/MainScreen.dart';
+import 'package:hvacr_tool_box/screens/compressor/Compressor.dart';
 import 'package:hvacr_tool_box/screens/videos.dart';
 import 'package:provider/provider.dart';
 import 'screens/settings.dart';
@@ -21,7 +22,7 @@ void main() {
       accentColor: Color(0xffffffff)
     ),
       debugShowCheckedModeBanner: false,
-       home: MainScreen() ,
+       home: Compressor() ,
       title: 'Hvacr Tool Box',
 
     ),
