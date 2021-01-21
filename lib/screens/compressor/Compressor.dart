@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/widgets/CategoryBar.dart';
-import 'package:hvacr_tool_box/widgets/Drawer.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 
 import 'coolingCapacity.dart';
@@ -26,13 +25,16 @@ class _CompressorState extends State<Compressor> {
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child:Column(
-          children: [
-            CategoryBar(test, (){} , <Widget>[
-            CoolingCapacity(),
-            Container(color: Colors.green, height: 400,) ,
-            Container(color: Colors.blue, height: 400,)]),
-          ],
+        child:SingleChildScrollView(
+                  child: Column(
+            children: [
+              
+              CategoryBar(test, (){} , <Widget>[
+              CoolingCapacity(),
+              Container(color: Colors.green, height: 400,) ,
+              Container(color: Colors.blue, height: 400,)]),
+            ],
+          ),
         )
       ),
     );

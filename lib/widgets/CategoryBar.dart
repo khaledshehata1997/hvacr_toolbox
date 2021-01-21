@@ -19,28 +19,22 @@ class _CategoryBarState extends State<CategoryBar> {
   int thisIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height*0.8,
-    width: MediaQuery.of(context).size.width,
-    child: SingleChildScrollView(
-          child: Column(
-          children: [
+    return Column(
+    children: [
       Container(
         height: 50,
         child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.text.length,
-            itemBuilder: (context , i){
-              return categoryBarElement(widget.text[i] , thisIndex == i ? true : false , i);
-            },
+      scrollDirection: Axis.horizontal,
+      itemCount: widget.text.length,
+      itemBuilder: (context , i){
+        return categoryBarElement(widget.text[i] , thisIndex == i ? true : false , i);
+      },
         ),
       ),
       SizedBox(height:20),
       widget.listWidget[thisIndex]
-          ],
-        ),
-    )
-  );
+    ],
+        );
   }
 
   Widget categoryBarElement(text , bool selected , int ind) {

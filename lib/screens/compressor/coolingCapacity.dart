@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/widgets/serchBar.dart';
 
 class CoolingCapacity extends StatelessWidget{
   @override
@@ -9,11 +10,9 @@ class CoolingCapacity extends StatelessWidget{
         padding: EdgeInsets.only(left:20 , right:20),
         child: ListView(
           children: [
-            Container(
-              height:150,
-              width:MediaQuery.of(context).size.width,
-              color: Colors.red,
-            ),
+            serchBar((val){
+              print(val);
+            } , "Please enter compressor model"),
             Container(
               height:150,
               width:MediaQuery.of(context).size.width,
