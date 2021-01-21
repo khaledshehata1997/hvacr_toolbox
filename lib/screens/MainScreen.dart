@@ -25,48 +25,50 @@ class _MainScreenState extends State<MainScreen> {
         width:MediaQuery.of(context).size.width,
         child: Image(image: AssetImage("images/group_2.png")),
       ),
-      appBar: appbar(context, " ", false , isdrawer: true , scaffoldKey:_scaffoldKey ),
-      drawer: drawer(context),
-      body: Container(
-        margin: EdgeInsets.only(top:20),
-        padding: EdgeInsets.all(20),
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child:GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
+      appBar: appbar(context, " ", false , isdrawer: true , scaffoldKey:_scaffoldKey ) ,
+      drawer: drawer(context,),
+      body: ListView(
         children: [
-          mainCards( "images/compressor.png" , "Compressors"),
-          mainCards( "images/evaluation.png" , "Applications"),
-          mainCards( "images/questionary.png" , "Troubleshooting"),
-          mainCards( "images/book_5.png" , "Library")
-
+          mainCards( "images/home_images/compr.png" , "Compressors"),
+          mainCards( "images/home_images/app.png" , "Applications"),
+          mainCards( "images/home_images/torub.png" , "Troubleshooting"),
+          mainCards( "images/home_images/lib.png" , "Library"),
         ],
-        )
       ),
     );
   }
   Widget mainCards(image , text){
     return Container(
-      margin: EdgeInsets.all(5),
-      height: 100,
+
+      margin: EdgeInsets.all(20),
+      width: MediaQuery.of(context).size.width*.85,
+      height: MediaQuery.of(context).size.height*.18,
        decoration: BoxDecoration(
+         image:  DecorationImage(
+           image: AssetImage(image),
+           fit: BoxFit.cover,
+         ),
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(7),
         boxShadow: [
-          BoxShadow(color: Colors.black12 , blurRadius: 2 , spreadRadius: 0)]
+          BoxShadow(
+              color: Colors.grey
+            , blurRadius: 20,
+          )]
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Container(
-            width: 70,
-            height: 70,
-            child: Image(image: AssetImage(image))),
-          SizedBox(height:25),
-          Text(text , style:TextStyle(color: Colors.black54 , fontSize:20 , fontWeight: FontWeight.w600) )
+          Positioned(
+            bottom: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(text , style:TextStyle(color: Colors.black54 , fontSize:20 , fontWeight: FontWeight.w600) ),
+                Icon(Icons.arrow_forward)
+              ],
+            ),
+          )
+
         ],
       ),
     );
