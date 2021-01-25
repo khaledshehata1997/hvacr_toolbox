@@ -1,5 +1,7 @@
 
+
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/screens/compressor/coolingCapacityResult.dart';
 import 'package:hvacr_tool_box/widgets/serchBar.dart';
 
 class CoolingCapacity extends StatelessWidget{
@@ -29,19 +31,24 @@ class CoolingCapacity extends StatelessWidget{
            child:ListView.builder(
              itemCount: 10,
              itemBuilder: (context, index) {
-               return Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Wrap(
-                     direction: Axis.vertical,
-                     spacing: 10,
-                     children: [
-                       Text('${result['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                       Text('${result['name']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
-                     ],
-                   ),
-                   Divider(height: 22,),
-                 ],
+               return GestureDetector(
+                 onTap: (){
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> CoolingCapacityResult() ));
+                 },
+                                child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Wrap(
+                       direction: Axis.vertical,
+                       spacing: 10,
+                       children: [
+                         Text('${result['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                         Text('${result['name']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
+                       ],
+                     ),
+                     Divider(height: 22,),
+                   ],
+                 ),
                );
              },
            ) )
