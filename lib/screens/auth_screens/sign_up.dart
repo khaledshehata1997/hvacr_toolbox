@@ -77,42 +77,57 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(
                     height: mediQuery.width * .06,
                   ),
-                  Text(
-                    " name",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .045,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left:10.0),
+                    child: Text(
+                      "name",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .045,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(false, 'ادخل الاسم ',controller: _nameController,),
                   SizedBox(
-                    height: mediQuery.width * .005,
+                    height: mediQuery.width * .02,
                   ),
-                  Text(
-                    "Email",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .045,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left:10.0),
+                    child: Text(
+                      "Email",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .045,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(false, 'ادخل الايميل', controller: _emailController,),
                   SizedBox(
-                    height: mediQuery.width * .005,
+                    height: mediQuery.width * .02,
                   ),
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .045,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .045,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(true, 'ادخل الرقم السري',controller: _passwordController,),
-                  Text(
-                    "Confirm password",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .045,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  SizedBox(
+                    height: mediQuery.width * .02,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left:10.0),
+                    child: Text(
+                      "Confirm password",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .045,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(true, 'ادخل الرقم السري',controller: _passwordConfirmController,),
                   Row(
@@ -182,12 +197,10 @@ class _SignUpState extends State<SignUp> {
                     "$message",
                     style: TextStyle(color: Colors.red, fontSize: 15),
                   )),
-                  SizedBox(
+                  isLoading? SizedBox(
                     height: 20,
-                  ),
-                  SizedBox(
-                    height: mediQuery.height * .03,
-                  ),
+                  ):Container(),
+                  
                   DefaultButton(
                     text: 'SIGN UP',
                     press: () {
@@ -308,7 +321,7 @@ class _SignUpState extends State<SignUp> {
       } else {
         setState(() {
           isLoading = false;
-          message = data['message'];
+          message = "${data["errors"]}";
         });
       }
     } catch (e) {

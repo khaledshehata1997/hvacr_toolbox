@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/aboutUs.dart';
+import 'package:hvacr_tool_box/screens/auth_screens/Sign_in.dart';
+import 'package:hvacr_tool_box/screens/auth_screens/sharedPrefrencesFunc/authSaveAndGet.dart';
 import 'package:hvacr_tool_box/screens/contact_us.dart';
 import 'package:hvacr_tool_box/screens/myProfile.dart';
 import 'package:hvacr_tool_box/screens/my_plan.dart';
@@ -44,21 +46,34 @@ Widget drawer(context){
                 Container(
                   height: 80,
                   alignment:Alignment.center,
-                  child:Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xffe02020)),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  child:GestureDetector(
+                    onTap: (){
+                      logOut(context).then((value) {
+                        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+          (Route<dynamic> route) => false,
+        );
+                      });
+                    },
+                                      child: Container(
+                                        
+                      height: 45,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xffe02020)),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(image: AssetImage("images/logout_3.png") , width: 22, height: 22,),
               SizedBox(width:12),
               Text("Log Out" , style:TextStyle(color: Color(0xffe02020) , fontSize:18 , fontWeight: FontWeight.w600) )
             ],
           ),
+                    ),
                   )
                 )
               ],

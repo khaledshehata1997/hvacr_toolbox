@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 Widget appbar(context,String text1 , bool isGreen ,{ bool isdrawer = false , scaffoldKey} ){
  return AppBar(
-        title: Text(text1 , style:TextStyle(color: isGreen ? Colors.white : Colors.black45)),
+        title: Text(text1 , style:TextStyle(color: isGreen ? Colors.white : Colors.black45 , fontSize: 20,)),
         backgroundColor: isGreen? Theme.of(context).primaryColor : Color(0xffffffff),
         centerTitle: true,
         elevation: 0,

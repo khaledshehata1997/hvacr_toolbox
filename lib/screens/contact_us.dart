@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
 import 'package:hvacr_tool_box/widgets/default_button.dart';
 
@@ -8,21 +10,7 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     var mediQuery = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'CONTACT US',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.green,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {},
-        ),
-      ),
+      appBar: appbar(context , 'CONTACT US' , true),
       body: ListView(
         children: [
           Container(
@@ -172,48 +160,61 @@ class ContactUs extends StatelessWidget {
                   height: mediQuery.width * .06,
                 ),
 
-                Text(
-                  " name",
-                  style: TextStyle(
-                      fontSize: mediQuery.width * .045,
-                      color: Colors.green,
-                      fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: Text(
+                    " name",
+                    style: TextStyle(
+                        fontSize: mediQuery.width * .045,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 CustomTextForm(false, 'ادخل الاسم ' ),
                 SizedBox(
-                  height: mediQuery.width * .005,
+                  height: mediQuery.width * .02,
                 ),
 
-                Text(
-                  " Email",
-                  style: TextStyle(
-                      fontSize: mediQuery.width * .045,
-                      color: Colors.green,
-                      fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                                  child: Text(
+                                    
+                    " Email",
+                    style: TextStyle(
+                        fontSize: mediQuery.width * .045,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 CustomTextForm(false, 'ادخل البريد الالكتروني '),
                 SizedBox(
-                  height: mediQuery.width * .005,
+                  height: mediQuery.width * .02,
                 ),
 
-                Text(
-                  "Subject",
-                  style: TextStyle(
-                      fontSize: mediQuery.width * .045,
-                      color: Colors.green,
-                      fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.only(left:10.0),
+                  child: Text(
+                    "Subject",
+                    style: TextStyle(
+                        fontSize: mediQuery.width * .045,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 CustomTextForm(false, 'ادخل الاسم '),
                 SizedBox(
-                  height: mediQuery.width * .005,
+                  height: mediQuery.width * .02,
                 ),
 
-                Text(
-                  " Description",
-                  style: TextStyle(
-                      fontSize: mediQuery.width * .045,
-                      color: Colors.green,
-                      fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: Text(
+                    " Description",
+                    style: TextStyle(
+                        fontSize: mediQuery.width * .045,
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
 
                 Padding(

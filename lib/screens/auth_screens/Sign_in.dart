@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/MainScreen.dart';
+import 'package:hvacr_tool_box/screens/auth_screens/forget_password.dart';
 import 'package:hvacr_tool_box/screens/auth_screens/sign_up.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
@@ -71,12 +72,15 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                     height: mediQuery.width * .1,
                   ),
-                  Text(
-                    "Username",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .05,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left:10.0),
+                    child: Text(
+                      "Username",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .05,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(
                     false,
@@ -86,12 +90,15 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                     height: mediQuery.width * .045,
                   ),
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                        fontSize: mediQuery.width * .05,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.only(left:10.0),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                          fontSize: mediQuery.width * .05,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                   CustomTextForm(
                     true,
@@ -116,10 +123,13 @@ class _SignInState extends State<SignIn> {
                   //     )
                   //   ],
                   // ),
-                  Container(
-                    margin: EdgeInsets.only(right: 13, top: 5),
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassword()));
+                    },
+                                      child: Container(
+                      margin: EdgeInsets.only(right: 13, top: 5),
+                      alignment: Alignment.centerRight,
                       child: Text(
                         "Forget Password!",
                         style: TextStyle(

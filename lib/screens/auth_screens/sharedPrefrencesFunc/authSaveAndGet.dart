@@ -29,4 +29,11 @@ Future<bool> checkSignIn(context) async {
     print('read token : $value');
     signData.setToken(value);
     return value == null;
-  }
+}
+
+Future logOut(context)async{
+  SignData signData = Provider.of<SignData>(context, listen: false);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.clear();
+  signData.setToken("");
+}
