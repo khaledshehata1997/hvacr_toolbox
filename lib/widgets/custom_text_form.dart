@@ -1,32 +1,43 @@
 import 'package:flutter/material.dart';
 
-class CustomTextForm extends StatelessWidget {
-  var hint;
+class CustomTextForm extends StatefulWidget {
   var obScur;
   var validate;
-
-  CustomTextForm( var obScur, var validate){
+  var controller;
+  CustomTextForm( var obScur, var validate , {var controller} ){
     this.obScur=obScur;
     this.validate=validate;
-
+    this.controller = controller;
   }
+
+  @override
+  _CustomTextFormState createState() => _CustomTextFormState();
+}
+
+class _CustomTextFormState extends State<CustomTextForm> {
+  var hint;
+  
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    var mediQuery = MediaQuery.of(context).size;
+    return Stack(
+                    children: [
+                      Padding(
       padding: EdgeInsets.symmetric(horizontal: 6,vertical: 2),
       child: TextFormField(
-        obscureText: obScur,
+        controller: widget.controller,
+        obscureText: widget.obScur,
           validator: (value){
             if (value.isEmpty)
-              return '$validate';
-          },
-          onSaved: (value){
-
+              return '${widget.validate}';
           },
           cursorColor:Colors.green ,
           decoration: InputDecoration(
-            contentPadding: new EdgeInsets.symmetric(vertical: .01, horizontal: 5.0),
-
+            errorStyle: TextStyle(
+              fontSize:15
+            ),
+           // contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            contentPadding: EdgeInsets.only(left: 15 , right:15),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
@@ -53,6 +64,21 @@ class CustomTextForm extends StatelessWidget {
 
           )
       ),
-    ) ;
+    ) ,
+                     widget.obScur? Positioned(
+                          top: mediQuery.height * .025,
+                          left: mediQuery.width * .83,
+                          child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  widget.obScur = !widget.obScur;
+                                });
+                              },
+                              child: Icon(
+                                Icons.remove_red_eye_outlined,
+                                color: Colors.black45,
+                              ))):Container()
+                    ],
+                  );
   }
 }

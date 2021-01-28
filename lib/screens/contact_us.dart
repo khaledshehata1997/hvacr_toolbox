@@ -179,7 +179,7 @@ class ContactUs extends StatelessWidget {
                       color: Colors.green,
                       fontWeight: FontWeight.w500),
                 ),
-                CustomTextForm(false, 'ادخل الاسم '),
+                CustomTextForm(false, 'ادخل الاسم ' ),
                 SizedBox(
                   height: mediQuery.width * .005,
                 ),

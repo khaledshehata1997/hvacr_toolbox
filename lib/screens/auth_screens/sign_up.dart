@@ -1,10 +1,14 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
 import 'package:hvacr_tool_box/widgets/default_button.dart';
 
+import '../MainScreen.dart';
 import 'Sign_in.dart';
+import 'sharedPrefrencesFunc/authSaveAndGet.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -12,10 +16,20 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  GlobalKey _globalKey = GlobalKey();
   var keepMeLoggedIn = false;
   var checkPrivcyPolicy = false;
-  var _obscure = true;
+
+  final _formKey = GlobalKey<FormState>();
+  // var keepMeLoggedIn=false;
+
+  String message = "";
+  bool isLoading = false;
+
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _emailController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _passwordConfirmController =
+      new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +38,11 @@ class _SignUpState extends State<SignUp> {
       backgroundColor: Colors.white,
       appBar: appbar(context, 'SIGN UP', false),
       body: Form(
-        key: _globalKey,
+        key: _formKey,
         child: ListView(
           children: [
             Container(
-              margin: EdgeInsets.only(left: 12, right: 12,top: 7),
+              margin: EdgeInsets.only(left: 12, right: 12, top: 7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -70,7 +84,7 @@ class _SignUpState extends State<SignUp> {
                         color: Colors.black45,
                         fontWeight: FontWeight.w500),
                   ),
-                  CustomTextForm(false, 'ادخل الاسم '),
+                  CustomTextForm(false, 'ادخل الاسم ',controller: _nameController,),
                   SizedBox(
                     height: mediQuery.width * .005,
                   ),
@@ -81,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                         color: Colors.black45,
                         fontWeight: FontWeight.w500),
                   ),
-                  CustomTextForm(false, 'ادخل الايميل'),
+                  CustomTextForm(false, 'ادخل الايميل', controller: _emailController,),
                   SizedBox(
                     height: mediQuery.width * .005,
                   ),
@@ -92,22 +106,7 @@ class _SignUpState extends State<SignUp> {
                         color: Colors.black45,
                         fontWeight: FontWeight.w500),
                   ),
-                  Stack(
-                    children: [
-                      CustomTextForm(_obscure, 'ادخل الرقم السري'),
-                      Positioned(
-                          top: mediQuery.height * .025,
-                          left: mediQuery.width * .8,
-                          child: GestureDetector(
-                              onTap: () {
-                                _obscure != _obscure;
-                              },
-                              child: Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Colors.black45,
-                              )))
-                    ],
-                  ),
+                  CustomTextForm(true, 'ادخل الرقم السري',controller: _passwordController,),
                   Text(
                     "Confirm password",
                     style: TextStyle(
@@ -115,22 +114,7 @@ class _SignUpState extends State<SignUp> {
                         color: Colors.black45,
                         fontWeight: FontWeight.w500),
                   ),
-                  Stack(
-                    children: [
-                      CustomTextForm(_obscure, 'ادخل الرقم السري'),
-                      Positioned(
-                          top: mediQuery.height * .025,
-                          left: mediQuery.width * .8,
-                          child: GestureDetector(
-                              onTap: () {
-                                _obscure != _obscure;
-                              },
-                              child: Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Colors.black45,
-                              )))
-                    ],
-                  ),
+                  CustomTextForm(true, 'ادخل الرقم السري',controller: _passwordConfirmController,),
                   Row(
                     children: [
                       Checkbox(
@@ -163,24 +147,64 @@ class _SignUpState extends State<SignUp> {
                       ),
                       RichText(
                         text: TextSpan(
-                          text: 'I have read and consent to the HVACR\n TOOLBOX',
+                          text:
+                              'I have read and consent to the HVACR\n TOOLBOX',
                           style: TextStyle(color: Colors.black45),
                           children: <TextSpan>[
-                            TextSpan(text: ' privacy policy', style: TextStyle(color: Colors.green)),
-                            TextSpan(text: ' and',style: TextStyle(color: Colors.black45),),
-                            TextSpan(text: ' Terms', style: TextStyle(color: Colors.green)),
+                            TextSpan(
+                                text: ' privacy policy',
+                                style: TextStyle(color: Colors.green)),
+                            TextSpan(
+                              text: ' and',
+                              style: TextStyle(color: Colors.black45),
+                            ),
+                            TextSpan(
+                                text: ' Terms',
+                                style: TextStyle(color: Colors.green)),
                           ],
                         ),
                       ),
-
                     ],
+                  ),
+                  SizedBox(
+                    height: mediQuery.height * .03,
+                  ),
+                  isLoading == true
+                      ? Center(
+                          child: Container(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator()),
+                        )
+                      : Container(),
+                  Center(
+                      child: Text(
+                    "$message",
+                    style: TextStyle(color: Colors.red, fontSize: 15),
+                  )),
+                  SizedBox(
+                    height: 20,
                   ),
                   SizedBox(
                     height: mediQuery.height * .03,
                   ),
                   DefaultButton(
                     text: 'SIGN UP',
-                    press: () {},
+                    press: () {
+                      String email, password , name , passwordConf;
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+
+                        setState(() {
+                          isLoading = true;
+                        });
+                        name = _nameController.text.trim();
+                        email = _emailController.text.trim();
+                        password = _passwordController.text;
+                        passwordConf = _passwordConfirmController.text;
+                        signinData(name,email, password,passwordConf);
+                      }
+                    },
                   )
                 ],
               ),
@@ -251,5 +275,48 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  signinData(String name, String email, String password,
+      String passwordConfirmation) async {
+    try {
+      print("body : $name   $email    $password    $passwordConfirmation");
+      var url = "https://api.hvacrtoolbox.com/api/auth/register";
+
+      var request = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "name": "$name",
+          "email": "$email",
+          "password": "$password",
+          "password_confirmation": "$passwordConfirmation"
+        }),
+      );
+      print(request.body);
+      var data = jsonDecode(request.body);
+
+      if ("${data['success']}" == "true") {
+        saveTok("${data['token']}");
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        setState(() {
+          isLoading = false;
+          message = data['message'];
+        });
+      }
+    } catch (e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+        message = "Error From Server or Network";
+      });
+    }
   }
 }
