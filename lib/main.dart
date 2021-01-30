@@ -6,6 +6,7 @@ import 'package:hvacr_tool_box/screens/auth_screens/forget_password.dart';
 import 'package:hvacr_tool_box/screens/auth_screens/sign_up.dart';
 import 'package:hvacr_tool_box/screens/compressor/Compressor.dart';
 import 'package:hvacr_tool_box/screens/edit_my_profile.dart';
+import 'package:hvacr_tool_box/screens/trouble_shotting/trouble_shooting.dart';
 import 'package:provider/provider.dart';
 import 'screens/auth_screens/sharedPrefrencesFunc/authSaveAndGet.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       }
 
       // Return your home here
-      return MainScreen();
+      return TroubleShooting();
     } else {
 
       // Return loading screen while reading preferences
