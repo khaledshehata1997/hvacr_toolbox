@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/compressor/Compressor.dart';
+import 'package:hvacr_tool_box/screens/trouble_shotting/trouble_shooting.dart';
 import 'package:hvacr_tool_box/widgets/CategoryBar.dart';
 import 'package:hvacr_tool_box/widgets/Drawer.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
@@ -48,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
            switch(id){
              case 1 : Navigator.push(context, MaterialPageRoute(builder: (context)=>Compressor())); break;
              case 2 :Navigator.push(context, MaterialPageRoute(builder: (context)=>Application())); break;
+             case 3 :Navigator.push(context, MaterialPageRoute(builder: (context)=>TroubleShooting())); break;
              default:print("clicked");
            } 
           },

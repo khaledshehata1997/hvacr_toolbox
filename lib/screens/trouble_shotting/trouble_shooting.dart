@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/applications/refrigators.dart';
 import 'package:hvacr_tool_box/screens/compressor/coolingCapacity.dart';
+import 'package:hvacr_tool_box/screens/trouble_shotting/refregrator/refrigrator_search.dart';
+import 'package:hvacr_tool_box/screens/trouble_shotting/washinng_machine/trouble_washing_machine.dart';
 import 'package:hvacr_tool_box/widgets/CategoryBar.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 
-import 'air_conditioners.dart';
+import 'air_conditioners/residential_air_conditioners.dart';
+import 'air_conditioners/trouble_air_conditioners.dart';
+import 'archive/trouble_archive.dart';
 
 
 class TroubleShooting extends StatefulWidget {
@@ -19,7 +23,7 @@ class _TroubleShootingState extends State<TroubleShooting> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xffffffff),
-        appBar: appbar(context, 'TROUBLE SHOOTING', true),
+        appBar: appbar(context, 'TROUBLESHOOTING', true),
         body: ListView(
           children: [
             Container(
@@ -32,12 +36,12 @@ class _TroubleShootingState extends State<TroubleShooting> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text("*You've searched in Air Conditioners 0 times today and you've 3 times left" , style:TextStyle(color: Colors.black54 , fontSize:17)),
                     ),
-                     SizedBox(height:20),
+                     SizedBox(height:15),
                     CategoryBar(test2, (){} , <Widget>[
                       TroubleAirConditioners(),
-                      Container(color: Colors.blue,),
-                      Container(color: Colors.black,),
-                      Container(color: Colors.black,),
+                      RefrigeratorSearch(),
+                      WashingMachine(),
+                      Archive()
                     ]),
 
 

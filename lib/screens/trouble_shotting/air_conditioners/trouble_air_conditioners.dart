@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/screens/trouble_shotting/air_conditioners/residential_air_conditioners.dart';
 
 class TroubleAirConditioners extends StatefulWidget {
   @override
@@ -11,11 +12,16 @@ class _TroubleAirConditionersState extends State<TroubleAirConditioners> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        troubleAir('Residential Air Conditioners',(){}),
-        troubleAir('Package Air Conditioners',(){}),
-        troubleAir('VDV',(){}),
-        troubleAir('VRF',(){}),
-        troubleAir('Chillers',(){}),
+        troubleAir('Residential Air Conditioners',(){
+          Navigator.pushNamed(context, 'ResidentialAirCondition');}),
+        troubleAir('Package Air Conditioners',(){
+          Navigator.pushNamed(context, 'PackageAirCondition');}),
+        troubleAir('VDV',(){
+          Navigator.pushNamed(context, 'Vdv');}),
+        troubleAir('VRF',(){
+          Navigator.pushNamed(context, 'Vrf');}),
+        troubleAir('Chillers',(){
+          Navigator.pushNamed(context, 'Chillers');}),
       ],
     );
   }
