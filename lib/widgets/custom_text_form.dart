@@ -4,10 +4,12 @@ class CustomTextForm extends StatefulWidget {
   var obScur;
   var validate;
   var controller;
-  CustomTextForm( var obScur, var validate , {var controller} ){
+  bool isNarrow;
+  CustomTextForm( var obScur, var validate , {var controller , bool isNarrow = false} ){
     this.obScur=obScur;
     this.validate=validate;
     this.controller = controller;
+    this.isNarrow = isNarrow;
   }
 
   @override
@@ -67,7 +69,7 @@ class _CustomTextFormState extends State<CustomTextForm> {
     ) ,
                      widget.obScur? Positioned(
                           top: mediQuery.height * .025,
-                          left: mediQuery.width * .83,
+                          left: widget.isNarrow ? mediQuery.width * .7:mediQuery.width * .83,
                           child: GestureDetector(
                               onTap: () {
                                 setState(() {
