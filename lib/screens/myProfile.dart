@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/screens/edit_my_profile.dart';
 
 import '../widgets/appBar.dart';
 import '../widgets/default_button.dart';
@@ -140,7 +142,9 @@ class MyProfile extends StatelessWidget{
                       ),
                       
                       SizedBox(height: 30,),
-                      DefaultButton(text:"EDIT PROFILE" , press: (){},)
+                      DefaultButton(text:"EDIT PROFILE" , press: (){
+                       Navigator.push(context , MaterialPageRoute(builder: (context)=>EditMyProfile()));
+                      },)
           ],
         ),
       ),

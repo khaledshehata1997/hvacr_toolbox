@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/auth_screens/Sign_in.dart';
+import 'package:hvacr_tool_box/toast/alerts.dart';
 
 import '../../widgets/appBar.dart';
 import '../../widgets/custom_text_form.dart';
@@ -137,17 +138,21 @@ class _ChangeForgotPasswordState extends State<ChangeForgotPassword> {
           "email": email,
           "pin": pin,
           "new_password": password,
-          "new_password_configirmation": passwordRe
+          "new_password_confirmation": passwordRe
         }),
       );
       print(request.body);
       var data = jsonDecode(request.body);
 
       if ("${data['success']}" == "true") {
-        Navigator.push(
+        alertTost("${data['message']}");
+       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => SignIn()),
+          (Route<dynamic> route) => false,
         );
+          
+        
       } else {
         setState(() {
           isLoading = false;

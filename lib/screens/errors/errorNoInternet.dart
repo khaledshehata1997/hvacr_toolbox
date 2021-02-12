@@ -4,6 +4,10 @@ import 'package:hvacr_tool_box/widgets/default_button.dart';
 import 'package:hvacr_tool_box/widgets/textOnFields.dart';
 
 class ErrorNoInternet extends StatelessWidget {
+  final Function press;
+  ErrorNoInternet({
+    this.press,
+  });
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -39,7 +43,7 @@ class ErrorNoInternet extends StatelessWidget {
                 Center(
                     child: DefaultButton(
                   text: "Try again",
-                  press: () {},
+                  press: press,
                 )),
                 SizedBox(height: 50),
               ]),

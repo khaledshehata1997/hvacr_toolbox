@@ -20,7 +20,6 @@ class EditMyProfile extends StatelessWidget {
                Container(
                  padding: EdgeInsets.all(10),
                  width: mediQuery.width * .9,
-                 height: mediQuery.height * .42,
                  decoration: BoxDecoration(
                    color: Colors.white,
                    boxShadow: [
@@ -56,10 +55,13 @@ class EditMyProfile extends StatelessWidget {
                  ),
                ),
                SizedBox(height: mediQuery.height*.04,),
+               DefaultButton(text: 'SAVE',
+                 press: (){},
+               ),
+               SizedBox(height: mediQuery.height*.04,),
                Container(
                  padding: EdgeInsets.all(10),
                  width: mediQuery.width * .9,
-                 height: mediQuery.height * .42,
                  decoration: BoxDecoration(
                    color: Colors.white,
                    boxShadow: [

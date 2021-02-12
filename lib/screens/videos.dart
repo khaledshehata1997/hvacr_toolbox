@@ -1,10 +1,30 @@
 
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/provider/auth_provider.dart';
 import 'package:hvacr_tool_box/screens/video/video.dart';
+import 'package:hvacr_tool_box/toast/alerts.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
+import 'package:provider/provider.dart';
 
-class Videos extends StatelessWidget{
+class Videos extends StatefulWidget{
+  
+  @override
+  _VideosState createState() => _VideosState();
+}
+
+class _VideosState extends State<Videos> {
+  List<String> names = [];
+  List<String> descriptions = [];
+  List<String> ids = [];
+
+  @override
+  void initState() {
+    getVideos(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,20 +35,19 @@ class Videos extends StatelessWidget{
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.all(20),
-        child:SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            video( context , 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4' , "How to register on the site"),
-            //  video( context , 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4' , "How to register on the site"),
-            //   video( context , 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4' , "How to register on the site"),
-
-          ],),
+        child:ListView.builder(
+          shrinkWrap: true,
+          itemCount: names.length,
+        itemBuilder:(context , i){
+          return video(context, ids[i], names[i], descriptions[i]);
+        }
+          
         )
       ),
     );
   }
-  Widget video(BuildContext context,String url , String text){
+
+  Widget video(BuildContext context,String url , String text , String description){
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -37,23 +56,65 @@ class Videos extends StatelessWidget{
           BoxShadow(color: Colors.black12 , blurRadius: 2 , spreadRadius: 2)]
       ),
       margin: EdgeInsets.only(bottom:20),
-      height: 270,
+      //height: 320,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children:[
         Container(
-        height: 220,
+        //height: 270,
         width: MediaQuery.of(context).size.width,
         child: VideoApp(url)),
         Container(
-          height: 50,
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(left :20 , right:20),
-          alignment: Alignment.centerLeft,
-          child: Text(text , style:TextStyle(color: Colors.black54 , fontSize:18)),
+          padding: EdgeInsets.all(15),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Text(text , style:TextStyle(color: Colors.black54 , fontSize:18)),
+              Text(description , style:TextStyle(color: Colors.black54 , fontSize:15)),
+            ],
+          ),
         )
         ]
       ),
     );
+  }
+
+  getVideos(context) async {
+    SignData signData = Provider.of<SignData>(context, listen: false);
+    try {
+      var url = "https://api.hvacrtoolbox.com/api/tutorials";
+
+      var request = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${signData.getToken}'
+        },
+      );
+      print(request.body);
+      var data = jsonDecode(request.body);
+      List dataa = data["tutorials"];
+
+      
+      if ("${data['success']}" == "true") {
+        for (var i = 0; i < dataa.length; i++) {
+            names.add("${dataa[i]["title"]["en"]}");
+            descriptions.add("${dataa[i]["description"]["en"]}");
+            String url = "${dataa[i]["url"]}";
+           List<String> id = url.split("/"); 
+           print(id[id.length-1]);
+           ids.add(id[id.length-1]);
+      }
+      setState(() {
+        
+      });
+      } else {
+        alertTost("${data["message"]}");
+        
+      }
+    } catch (e) {
+      alertTost("Error From Server or Network");
+    }
   }
 }
