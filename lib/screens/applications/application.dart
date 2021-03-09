@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/screens/applications/refrigators.dart';
-import 'package:hvacr_tool_box/screens/compressor/coolingCapacity.dart';
 import 'package:hvacr_tool_box/widgets/CategoryBar.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 

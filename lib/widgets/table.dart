@@ -27,12 +27,6 @@ Widget complexTabelWidget(context, String tableTitle , List<String> coulm1,
                           width: MediaQuery.of(context).size.width*0.59,
                           child: Row(
                             children: [
-                              Container(
-                          width: 1.5,
-                          height: 50,
-                          color: Colors.white,
-                      ),
-                          colum2(context , coulm2[ind][i]),
                       Container(
                           width: 1.5,
                           height: 50,
@@ -76,27 +70,6 @@ Widget colum1(context , int count , String text) {
   );
 }
 
-Widget colum2(context , text) {
-  return Column(
-    children: [
-      Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: MediaQuery.of(context).size.width * 0.11,
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.only(left: 5, right: 5),
-        child: Text('$text',
-            style: TextStyle(fontSize: 15, color: Colors.white)),
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width * 0.11,
-        height: 1.5,
-        color: Colors.white,
-      ),
-    ],
-  );
-}
-
 Widget colum3(int ind , int i , int iSize , int indSize , text) {
   bool isWhite;
   int size = iSize+ind+i;
@@ -133,7 +106,7 @@ Widget colum3(int ind , int i , int iSize , int indSize , text) {
 }
 
 Widget sambleTabelWidget(
-    context, String tableTitle , List<String> coulm1, List<String> coulm2, List<String> coulm3) {
+    context, String tableTitle , List<String> coulm1, List<String> coulm3) {
   return Column(
     children: [
       //  serchBar((value){},''),
@@ -149,7 +122,7 @@ Widget sambleTabelWidget(
           child:  Column(
             
             children: [
-              for(int index = 0 ; index<coulm1.length ; index++)...[ Column(
+              for(int index = 0 ; index<coulm3.length ; index++)...[ Column(
                     children:[
                        Row(
                         children: [
@@ -157,25 +130,12 @@ Widget sambleTabelWidget(
                             alignment: Alignment.centerLeft,
                             padding: EdgeInsets.only(left: 12),
                             height: 50,
-                            width: MediaQuery.of(context).size.width * 0.31,
+                            width: MediaQuery.of(context).size.width * 0.35,
                             color: Theme.of(context).primaryColor,
                             child: Text('${coulm1[index]}',
                                 style: TextStyle(fontSize: 15, color: Colors.white)),
                           ),
-                          Container(
-                            width: 1.5,
-                            height: 50,
-                            color: Colors.white,
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.11,
-                            color: Theme.of(context).primaryColor,
-                            padding: EdgeInsets.only(left: 5, right: 5),
-                            child: Text('${coulm2[index]}',
-                                style: TextStyle(fontSize: 15, color: Colors.white)),
-                          ),
+                          
                           Container(
                             width: 1.5,
                             height: 50,

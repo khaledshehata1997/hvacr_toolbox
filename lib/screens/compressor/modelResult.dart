@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/table.dart';
 
-class CrossReferencrResult extends StatefulWidget{
+class ModelResult extends StatefulWidget{
   //for complex table
   final String model;
   final String usagecount;
   final List<String> col1;
   final List<String> col2;
-  CrossReferencrResult(this.usagecount , this.col1 , this.col2 , this.model);
+  ModelResult(this.usagecount , this.col1 , this.col2 , this.model);
 
 
   @override
-  _CrossReferencrResultState createState() => _CrossReferencrResultState();
+  _ModelResultState createState() => _ModelResultState();
 }
 
-class _CrossReferencrResultState extends State<CrossReferencrResult> {
+class _ModelResultState extends State<ModelResult> {
 
   List<String> performance = [
         "brand",

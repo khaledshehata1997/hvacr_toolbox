@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget serchBar(Function onSubmitt(value), text) {
+Widget serchBar(Function onChanged(value), text) {
   return Container(
     margin: EdgeInsets.only(bottom: 10),
     child: TextField(
       textInputAction: TextInputAction.search,
-      onSubmitted: onSubmitt,
+      onChanged: onChanged,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),

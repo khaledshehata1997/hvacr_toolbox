@@ -25,14 +25,19 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       theme: ThemeData(
           fontFamily: "avenir",
+          colorScheme: ColorScheme.light(
+                    primary: Color(0xff2c8b29)
+                  ),
           primaryColor: Color(0xff2c8b29),
           accentColor: Color(0xff2c8b29)),
+          
+
       debugShowCheckedModeBanner: false,
       home: (FutureBuilder<bool>(
      future: checkSignIn(context),

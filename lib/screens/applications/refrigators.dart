@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/provider/auth_provider.dart';
+import 'package:hvacr_tool_box/screens/applications/refrigatorsResult.dart';
+import 'package:hvacr_tool_box/toast/alerts.dart';
 import 'package:hvacr_tool_box/widgets/serchBar.dart';
-import 'package:hvacr_tool_box/widgets/table.dart';
+import 'package:provider/provider.dart';
 
 class Refrigators extends StatefulWidget {
   @override
@@ -9,41 +14,89 @@ class Refrigators extends StatefulWidget {
 }
 
 class _RefrigatorsState extends State<Refrigators> {
-  final List<String> coulm1 = ["Brand" , "Model" , "Compressor type" , "Rate point temperature" , "Cooling capacity" , "Input Power" , "C.O.P" , "Running Current"];
-  final List<List<String>> colum2 = [[""],[""],[""],[""],["W","Kcal /Hr","BTU /Hr","TR","HP"],["W","HP"],[""],[""]];
-  final List<List<String>> colum3 = [["LG"],["QA114P"],["Rotary"],["7.2 / 54.4"],["1895","1629","6462","0.54","2.5"],["627","0.45"],["3.02"],["—"]];
-
-  final List<String> coulm11 = ["Brand" , "Model" , "Compressor type" , "Rate point temperature" , "Cooling capacity" , "Input Power" , "C.O.P" , "Running Current"];
-  final List<List<String>> colum22 = [[""],[""],[""],[""],["W","Kcal /Hr","BTU /Hr","TR","HP"],["W","HP"],[""],[""]];
-  final List<List<String>> colum33 = [["LG"],["QA114P"],["Rotary"],["7.2 / 54.4"],["1895","1629","6462","0.54","2.5"],["627","0.45"],["3.02"],["—"]];  @override
+  List result= [];
+  @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        serchBar((value){},'please enter compressor model '),
-        Container(
-            padding: EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  complexTabelWidget(context , "Air Conditioner Specification" , coulm1 , colum2 , colum3),
-                  SizedBox(height: 30,),
-                  Container(
-                    margin: EdgeInsets.only(left: 10,top: 10),
-                      alignment: Alignment.topLeft,
-                      child: Text('Matching Compressors Specification:',style: TextStyle(
-                        fontSize: 16,color:Colors.green,fontWeight: FontWeight.bold,),)),
-
-                  complexTabelWidget(context , "" , coulm11 , colum22 , colum33),
-
-
-
-                ],
-              ),
-            )
-
-        ),
+       serchBar((value){
+         search(context, value);
+       },'please enter Refrigators model '),
+       Container(
+           padding: EdgeInsets.all(15),
+           width: MediaQuery.of(context).size.width * .87,
+           height: MediaQuery.of(context).size.height *.65,
+           margin: EdgeInsets.only(left: 15,right: 15),
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(10),
+             color: Colors.white,
+             boxShadow: [
+               BoxShadow(
+                 color: Colors.grey.withOpacity(0.25),
+                 spreadRadius: 5,
+                 blurRadius: 7,
+                 offset: Offset(0, 3), // changes position of shadow
+               ),
+             ],
+           ),
+           child:ListView.builder(
+             itemCount: result.length,
+             itemBuilder: (context, index) {
+               return GestureDetector(
+                 onTap: (){
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> RefrigatorResult("${result[index]['id']}", '${result[index]['model']}' )));
+                 },
+                   child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Wrap(
+                         direction: Axis.vertical,
+                         spacing: 10,
+                         children: [
+                           Text('${result[index]['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                           Text('${result[index]['brand']} * ${result[index]['application_type']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
+                         ],
+                       ),
+                       Divider(height: 22,),
+                     ],
+                 ),
+               );
+             },
+           ) )
       ],
     );
+  }
+  search(context , String serch) async {
+    SignData signData = Provider.of<SignData>(context, listen: false);
+    try {
+      var url = "https://api.hvacrtoolbox.com/api/applications/refrigerators/search";
+
+      var request = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${signData.getToken}'
+        },
+        body:jsonEncode(<String, String>{
+          "query": "$serch"
+        }
+      ));
+      print(request.body);
+      var data = jsonDecode(request.body);
+      
+      if ("${data['success']}" == "true") {
+        setState(() {
+         result = data["refrigerators"];
+        });
+        alertTost("${data["message"]}");
+        
+      } else {
+        alertTost("${data["message"]}");
+        
+      }
+    } catch (e) {
+      alertTost("Error From Server or Network");
+      print(e);
+    }
   }
 }

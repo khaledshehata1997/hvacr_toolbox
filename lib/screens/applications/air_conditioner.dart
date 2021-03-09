@@ -2,6 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hvacr_tool_box/widgets/serchBar.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:hvacr_tool_box/provider/auth_provider.dart';
+import 'package:hvacr_tool_box/toast/alerts.dart';
+import 'package:provider/provider.dart';
+
+import 'air_condition_Result.dart';
 
 class AirConditioner extends StatefulWidget {
   @override
@@ -9,12 +16,14 @@ class AirConditioner extends StatefulWidget {
 }
 
 class _AirConditionerState extends State<AirConditioner> {
-  Map result={'model':'ELS072S4ST','name':'lennox * Air Conditioning'};
+  List result= [];
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-       serchBar((value){},'please enter compressor model '),
+       serchBar((value){
+         search(context, value);
+       },'please enter AirCondition model '),
        Container(
            padding: EdgeInsets.all(15),
            width: MediaQuery.of(context).size.width * .87,
@@ -33,26 +42,63 @@ class _AirConditionerState extends State<AirConditioner> {
              ],
            ),
            child:ListView.builder(
-             itemCount: 10,
+             itemCount: result.length,
              itemBuilder: (context, index) {
-               return Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Wrap(
-                     direction: Axis.vertical,
-                     spacing: 10,
-                     children: [
-                       Text('${result['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                       Text('${result['name']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
-
+               return GestureDetector(
+                 onTap: (){
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> AirConditionResult("${result[index]['id']}", '${result[index]['model']}' )));
+                 },
+                   child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Wrap(
+                         direction: Axis.vertical,
+                         spacing: 10,
+                         children: [
+                           Text('${result[index]['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                           Text('${result[index]['brand']} * ${result[index]['application_type']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
+                         ],
+                       ),
+                       Divider(height: 22,),
                      ],
-                   ),
-                   Divider(height: 22,),
-                 ],
+                 ),
                );
              },
            ) )
       ],
     );
+  }
+  search(context , String serch) async {
+    SignData signData = Provider.of<SignData>(context, listen: false);
+    try {
+      var url = "https://api.hvacrtoolbox.com/api/applications/air-conditioners/search";
+
+      var request = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${signData.getToken}'
+        },
+        body:jsonEncode(<String, String>{
+          "query": "$serch"
+        }
+      ));
+      print(request.body);
+      var data = jsonDecode(request.body);
+      
+      if ("${data['success']}" == "true") {
+        setState(() {
+         result = data["air_conditioners"];
+        });
+        alertTost("${data["message"]}");
+        
+      } else {
+        alertTost("${data["message"]}");
+        
+      }
+    } catch (e) {
+      alertTost("Error From Server or Network");
+      print(e);
+    }
   }
 }

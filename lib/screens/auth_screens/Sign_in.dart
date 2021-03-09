@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hvacr_tool_box/screens/MainScreen.dart';
 import 'package:hvacr_tool_box/screens/auth_screens/forget_password.dart';
 import 'package:hvacr_tool_box/screens/auth_screens/sign_up.dart';
 import 'package:hvacr_tool_box/widgets/appBar.dart';
 import 'package:hvacr_tool_box/widgets/custom_text_form.dart';
 import 'package:hvacr_tool_box/widgets/default_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../main.dart';
 import 'sharedPrefrencesFunc/authSaveAndGet.dart';
 
 class SignIn extends StatefulWidget {
@@ -270,7 +268,7 @@ class _SignInState extends State<SignIn> {
         saveTok("${data['token']}");
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => MainScreen()),
+          MaterialPageRoute(builder: (context) => MyApp()),
           (Route<dynamic> route) => false,
         );
       } else {

@@ -1,16 +1,28 @@
 
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:hvacr_tool_box/provider/auth_provider.dart';
 import 'package:hvacr_tool_box/screens/compressor/coolingCapacityResult.dart';
+import 'package:hvacr_tool_box/toast/alerts.dart';
 import 'package:hvacr_tool_box/widgets/serchBar.dart';
+import 'package:provider/provider.dart';
 
-class CoolingCapacity extends StatelessWidget{
+class CoolingCapacity extends StatefulWidget{
+  @override
+  _CoolingCapacityState createState() => _CoolingCapacityState();
+}
+
+class _CoolingCapacityState extends State<CoolingCapacity> {
+  List result=[];
   @override
   Widget build(BuildContext context) {
-    Map result={'model':'QA114P','name':'LG * R- 22* 220 V / 50 Hz * AC'};
     return Column(
       children: [
-       serchBar((value){},'please enter compressor model '),
+       serchBar((value){
+         search(context, value);
+       },'please enter compressor model '),
        Container(
            padding: EdgeInsets.all(15),
            width: MediaQuery.of(context).size.width * .9,
@@ -29,11 +41,11 @@ class CoolingCapacity extends StatelessWidget{
              ],
            ),
            child:ListView.builder(
-             itemCount: 10,
+             itemCount: result.length,
              itemBuilder: (context, index) {
                return GestureDetector(
                  onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=> CoolingCapacityResult() ));
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=> CoolingCapacityResult("${result[index]['id']}") ));
                  },
                                 child: Column(
                    crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,8 +54,8 @@ class CoolingCapacity extends StatelessWidget{
                        direction: Axis.vertical,
                        spacing: 10,
                        children: [
-                         Text('${result['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                         Text('${result['name']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
+                         Text('${result[index]['model']}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                         Text('${result[index]['brand']} * ${result[index]['refrigerant']} * ${result[index]['voltage_per_frequency']} * ${result[index]['application']}',style: TextStyle(fontSize: 15,color:Colors.black45)),
                        ],
                      ),
                      Divider(height: 22,),
@@ -54,5 +66,39 @@ class CoolingCapacity extends StatelessWidget{
            ) )
       ],
     );
+  }
+
+  search(context , String serch) async {
+    SignData signData = Provider.of<SignData>(context, listen: false);
+    try {
+      var url = "https://api.hvacrtoolbox.com/api/compressors/search";
+
+      var request = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${signData.getToken}'
+        },
+        body:jsonEncode(<String, String>{
+          "query": "$serch"
+        }
+      ));
+      print(request.body);
+      var data = jsonDecode(request.body);
+      
+      if ("${data['success']}" == "true") {
+        setState(() {
+         result = data["compressors"];
+        });
+        alertTost("${data["message"]}");
+        
+      } else {
+        alertTost("${data["message"]}");
+        
+      }
+    } catch (e) {
+      alertTost("Error From Server or Network");
+      print(e);
+    }
   }
 }

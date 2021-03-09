@@ -30,10 +30,7 @@ class _CompressorState extends State<Compressor> {
             child:SingleChildScrollView(
                       child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text("*You've searched in Air Conditioners 0 times today and you've 3 times left" , style:TextStyle(color: Colors.black54 , fontSize:17)),
-                  ),
+
                   CategoryBar(test, (){} , <Widget>[
                   CoolingCapacity(),
                     CrossReference(),
